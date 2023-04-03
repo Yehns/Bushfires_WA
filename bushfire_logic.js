@@ -11,13 +11,14 @@ let myMap = L.map("map", {
   }).addTo(myMap);
 
   // Use this link to get the GeoJSON data.
-  let bushfires_link = "http://127.0.0.1:5500/Project%203/Top_100_Bushfires.geojson";
+let bushfires_link = "http://127.0.0.1:5500/Project%203/Top_100_Bushfires.geojson";
 
   // Getting our GeoJSON data
   d3.json(bushfires_link).then(function(bushfire_data) {
     // Creating a GeoJSON layer with the retrieved data
     L.geoJson(bushfire_data).addTo(myMap);
   });
+  
 
 let firestations_link = "http://127.0.0.1:5500/Project%203/fire_station_districts.geojson"
 
