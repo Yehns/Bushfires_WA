@@ -10,18 +10,18 @@ d3.json(bushfires_url).then(function(data) {
 function createFeatures(bushfireData) {
 
   // Define a function that we want to run once for each feature in the features array.
-  // Give each feature a popup that describes the place and time of the earthquake.
+  // Give each feature a popup that describes the place and time of the bushfire.
   function onEachFeature(feature, layer) {
     layer.bindPopup(`<h2>${feature.properties.fih_year1}</h3><hr><p>${(feature.properties.fih_poly_type)}</p><hr><hs><h2>${feature.properties.fih_comment}</h3></hr><hr><p>`);
   }
 
-  // Create a GeoJSON layer that contains the features array on the earthquakeData object.
+  // Create a GeoJSON layer that contains the features array on the bushfires object.
   // Run the onEachFeature function once for each piece of data in the array.
   let bushfires = L.geoJSON(bushfireData, {
     onEachFeature: onEachFeature
   });
 
-  // Send our earthquakes layer to the createMap function/
+  // Send our bushfires layer to the createMap function
   createMap(bushfires);
 }
 
@@ -37,18 +37,18 @@ d3.json(firestations_url).then(function(data1) {
 function createFeatures(firestationData) {
 
   // Define a function that we want to run once for each feature in the features array.
-  // Give each feature a popup that describes the place and time of the earthquake.
+  // Give each feature a popup that describes the place and district of the DFES zones
   function onEachFeature(feature, layer) {
     layer.bindPopup(`<h2>${feature.properties.fih_year1}</h3><hr><p>${(feature.properties.fih_poly_type)}</p><hr><hs><h2>${feature.properties.fih_comment}</h3></hr><hr><p>`);
   }
 
-  // Create a GeoJSON layer that contains the features array on the earthquakeData object.
+  // Create a GeoJSON layer that contains the features array on the firestations object.
   // Run the onEachFeature function once for each piece of data in the array.
   let firestations = L.geoJSON(firestationData, {
     onEachFeature: onEachFeature
   });
 
-  // Send our earthquakes layer to the createMap function/
+  // Send our firestations layer to the createMap function/
   createMap(firestations);
 }
 
