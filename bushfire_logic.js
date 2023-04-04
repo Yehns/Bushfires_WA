@@ -74,7 +74,7 @@ function createMap(allData) {
     "Last 100 Bushfires" : allData
   };
 
-  // Create our map, giving it the streetmap and earthquakes layers to display on load.
+  // Create our map, giving it the streetmap and bushfires and firestations layers to display on load.
   let myMap = L.map("map", {
     center: [
       -32, 116
