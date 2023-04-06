@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Bushfires in WA</title>
+ 
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+</head>
+
+  <!-- Leaflet CSS -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css"
+    integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ=="
+    crossorigin="" />
+
+  <!-- Our CSS -->
+  <link rel="stylesheet" type="text/css" href="style.css">
+</head>
+
+<body>
+  <hr>
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12 jumbotron text-center">
+        <h1>Bushfires in WA</h1>
+       <!-- <p>Inspect Each <mark>Bushfire Data Set</mark> to Explore the Data</p>-->
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-">
+       
+<hr>
+        
+      </div>
+      <div class="container">
+        <div class="row">
+          <div class="col-md-6 col-sm-4 hidden-xs">
+            <div class="widget">
+              <div class="panel panel-default">
+                <div class="panel-heading">Bushfire Data</div>
+                <div class="panel-body">
+                  <ul class="panel-list margin-top-1">
+                    <p>The DBCA Fire History dataset is a collection of records of fire events (controlled burns and bushfires) that occurred on land managed by the Western Australian Department of Biodiversity, Conservation and Attractions, and sometimes on non-department-managed land. The dataset includes information from completed projects, such as the Great Western Woodlands project and the Gnangara Sustainability Strategy project, which used remote sensing and other methods to digitize fire events and verify fire records. The dataset also includes information on areas of clear-felled plantation and mining rehabilitation. 
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6 col-sm-4 hidden-xs">
+            <div class="widget">
+              <div class="panel panel-default">
+                <div class="panel-heading">DFES Zones</div>
+                <div class="panel-body">
+                  <ul class="panel-list margin-top-">
+                    <p>Fire and Rescue Service (FRS) Fire District boundaries define the gazetted descriptions of fire station districts, based upon cadastral information. PURPOSE: The file shows the area where DFES’s Fire and Rescue Service is responsible for 'incident control' management in conjunction with other agencies. DBCA, the Bush Fire Service (BFS), Police, State Emergency Service, St. John's Ambulance and assorted city councils and shires are the main users of this dataset. Councils have a legislative requirement to provide fire suppression facilities to their communities.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+      </div>
+    </div>
+  </div>
+<hr>
+
+  <!-- The div that holds our map -->
+  <div id="map"></div>
+  
+  <div class="col-right-5 text-center">
+  <!-- Leaflet JS -->
+  <script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"
+    integrity="sha512-gZwIG9x3wUXg2hdXF6+rVkLF/0Vi9U8D2Ntg4Ga5I5BZpVkVxlJWbSQtXPSiUTtC0TjtGOmxa1AJPuV0CPthew=="
+    crossorigin=""></script>
+
+  <!-- D3 JavaScript -->
+  <script src="https://d3js.org/d3.v5.min.js"></script>
+  
+  <!-- API key -->
+  <!-- <script type="text/javascript" src="config.js"></script>-->
+
+  <!-- Our JavaScript -->
+  <script type="text/javascript" src="bushfire_logic.js"></script>
+</body>
+
+</html>
