@@ -25,6 +25,8 @@ function createFeatures(bushfireData) {
     stroke: 0.5
   });
 
+console.log("100 Most Recent Bushfires", bushfireData)
+
 // Store our API endpoint as queryUrl.
 let firestations_url = "http://127.0.0.1:5500/Project%203/fire_station_districts.geojson";
 
@@ -32,6 +34,7 @@ let firestations_url = "http://127.0.0.1:5500/Project%203/fire_station_districts
 d3.json(firestations_url).then(function(data) {
   // Once we get a response, send the data.features object to the createFeatures function.
   createFeatures(data.features);
+  
 });
 
 function createFeatures(firestationData) {
@@ -67,7 +70,8 @@ function createFeatures(firestationData) {
     color: "blue",
     fillColor: "blue",
   });
-
+  
+console.log("DFES Zones", firestationData)
   // Create the base layers.
 
   let street = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -99,7 +103,6 @@ function createFeatures(firestationData) {
     layers: [street, bushfires, firestations]
   });
   
-
   // Create a layer control.
   // Pass it our baseMaps and overlayMaps.
   // Add the layer control to the map.
@@ -108,3 +111,46 @@ function createFeatures(firestationData) {
   }).addTo(myMap)
 }}; 
 
+function init() {
+
+  let dropdownMenu = d3.select("#selDataset");
+      d3.json(bushfireData).then((data) => {
+          let sampleNames = data.names;
+          sampleNames.forEach((Name) => {
+              dropdownMenu
+              .append("option")
+              .text(Name)
+          });
+      })
+  
+  buildChart(1);
+  };
+  
+  init();
+  
+  function optionChanged(newSample) {
+  
+           buildChart(newSample);
+           buildBubble(newSample);
+  
+      };
+
+function buildMetadata(sample) {
+  d3.json(bushfireData).then((data) => {
+      var metadata = data.metadata;
+      var resultArray = metadata.filter(sampleObj => sampleObj.id == sample);
+      var result = resultArray[0];
+      var PANEL = d3.select("#sample-metadata");
+  
+      PANEL.html("");
+      PANEL.append("h6").text("ID: " + result.id);
+      PANEL.append("h6").text("ETHNICITY: " + result.ethnicity);
+      PANEL.append("h6").text("GENDER: " + result.gender);
+      PANEL.append("h6").text("AGE: " + result.age);
+      PANEL.append("h6").text("LOCATION: " + result.location);
+      PANEL.append("h6").text("BBTYPE: " + result.bbtype);
+      PANEL.append("h6").text("WFREQ: " + result.wfreq);
+      });
+  };
+  
+buildMetadata(1);
