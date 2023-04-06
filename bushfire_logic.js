@@ -12,8 +12,9 @@ function createFeatures(bushfireData) {
   // Define a function that we want to run once for each feature in the features array.
   // Give each feature a popup that describes the metadata of each bushfire.
   function onEachFeature(feature, layer) {
-    layer.bindPopup(`<h2>${feature.properties.fih_hist_distr}</h3><hr><p>Fire Location: ${(feature.properties.fih_name)}</p></h3><p>Burn Type: ${(feature.properties.fih_poly_type)}</p></h3><p> DFES Report:${(feature.properties.fih_comment)}<p>${(feature.properties.fih_year1)}</p></h3><p></p><hr><hs><h2>${feature.properties.fih_hectares.toFixed(0)} Hectares</h3></hr><p>`);
+    layer.bindPopup(`<h3>${feature.properties.fih_hist_distr}</h3><hr><p>Fire Location: ${(feature.properties.fih_name)}</p></h3><p>Burn Type: ${(feature.properties.fih_poly_type)}</p></h3><p> DFES Report:${(feature.properties.fih_comment)}<p>Year: ${(feature.properties.fih_year1)}</p></h5><p></p><hs><h5>Area Burnt: ${feature.properties.fih_hectares.toFixed(0)} ha`);
   }
+  
 
   // Create a GeoJSON layer that contains the features array on the bushfires object.
   // Run the onEachFeature function once for each piece of data in the array.
@@ -60,7 +61,7 @@ function createFeatures(firestationData) {
     });
 
      // Give each feature a popup that describes the metadata for DFES zones
-    layer.bindPopup(`<h2>${feature.properties.name}</h3><hr><p>Zone Type: ${(feature.properties.dist_type)}</p></h3><p>Hazard Management Agency: ${(feature.properties.hma)}</p><h3><p>Perimeter Size: ${(feature.properties.st_perimeter_shape_.toFixed(0))} meters</h3></hr><hr></p>`);
+    layer.bindPopup(`<h2>${feature.properties.name}</h5><hr><p>Zone Type: ${(feature.properties.dist_type)}</p></h3><p>Hazard Management Agency: ${(feature.properties.hma)}</p><h5><p>Perimeter: ${(feature.properties.st_perimeter_shape_.toFixed(0))} meters`);
   }
 
   // Create a GeoJSON layer that contains the features array on the firestations object.
@@ -102,6 +103,7 @@ console.log("DFES Zones", firestationData)
     zoom: 8,
     layers: [street, bushfires, firestations]
   });
+
   
   // Create a layer control.
   // Pass it our baseMaps and overlayMaps.
@@ -110,47 +112,3 @@ console.log("DFES Zones", firestationData)
     collapsed: false
   }).addTo(myMap)
 }}; 
-
-function init() {
-
-  let dropdownMenu = d3.select("#selDataset");
-      d3.json(bushfireData).then((data) => {
-          let sampleNames = data.names;
-          sampleNames.forEach((Name) => {
-              dropdownMenu
-              .append("option")
-              .text(Name)
-          });
-      })
-  
-  buildChart(1);
-  };
-  
-  init();
-  
-  function optionChanged(newSample) {
-  
-           buildChart(newSample);
-           buildBubble(newSample);
-  
-      };
-
-function buildMetadata(sample) {
-  d3.json(bushfireData).then((data) => {
-      var metadata = data.metadata;
-      var resultArray = metadata.filter(sampleObj => sampleObj.id == sample);
-      var result = resultArray[0];
-      var PANEL = d3.select("#sample-metadata");
-  
-      PANEL.html("");
-      PANEL.append("h6").text("ID: " + result.id);
-      PANEL.append("h6").text("ETHNICITY: " + result.ethnicity);
-      PANEL.append("h6").text("GENDER: " + result.gender);
-      PANEL.append("h6").text("AGE: " + result.age);
-      PANEL.append("h6").text("LOCATION: " + result.location);
-      PANEL.append("h6").text("BBTYPE: " + result.bbtype);
-      PANEL.append("h6").text("WFREQ: " + result.wfreq);
-      });
-  };
-  
-buildMetadata(1);
