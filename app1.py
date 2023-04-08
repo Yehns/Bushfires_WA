@@ -9,12 +9,10 @@ import datetime as dt
 from flask import Flask, jsonify
 
 
-# create engine to hawaii.sqlite
-#engine = create_engine("sqlite:///Resources/hawaii.sqlite")
+# create engine to postgresSQL database
 engine = create_engine('postgresql+psycopg2://postgres:Monday%4010@localhost/bushfires_wa')
 
 # reflect an existing database into a new model
-# reflect the tables
 Base = automap_base()
 Base.prepare(autoload_with=engine)
 
@@ -36,18 +34,11 @@ def welcome():
         f"/api/v1.0/season<br/>"
         f"/api/v1.0/"
     )
-#         f"enter start date"
-#         f"(date must be in format yyyy-mm-dd)<br/>"
-#         f"....example: /api/v1.0/2015-04-25<br/>"
-#         f"/api/v1.0/"
-#         f"enter start date/end date"
-#         f"(date must be in format yyyy-mm-dd)<br/>"
-#         f"....example: /api/v1.0/2015-04-25/2016-04-25<br/>"
-#     )
+
 
 @app.route("/api/v1.0/coords")
 def coord():
-    #2) get a list of precipitation
+    #2) get a coord data
     session = Session(engine)
     results = session.query(coords.coords, coords.year, coords.date, coords.season, coords.district).filter(coords.year >= 1970).all()
     session.close()
@@ -58,7 +49,7 @@ def coord():
 
 @app.route("/api/v1.0/per_year")
 def year():
-    #3) get a list of stations
+    #3) get fires per year data
     session = Session(engine)
     results = session.query(per_year.year, per_year.count).all()
     session.close()
@@ -69,7 +60,7 @@ def year():
 
 @app.route("/api/v1.0/season")
 def seas():
-    #3) get a list of stations
+    #3) get season data
     session = Session(engine)
     results = session.query(season.season, season.count, season.avg_size).all()
     session.close()
