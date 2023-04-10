@@ -1,27 +1,33 @@
-let url1 = "http://127.0.0.1:5000/api/v1.0/coords"
+let url1 = "http://127.0.0.1:5000/api/v1.0/coords2021"
+let url2 = "http://127.0.0.1:5000/api/v1.0/coords2020"
+
+var fireIcon = L.icon({
+  iconUrl: 'fire01.png',
+  
+  iconSize:     [19, 46], // size of the icon
+  iconAnchor:   [10, 10], // point of the icon which will correspond to marker's location
+  popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
+});
+var fireIcon2 = L.icon({
+  iconUrl: 'fire02.png',
+  
+  iconSize:     [19, 46], // size of the icon
+  iconAnchor:   [10, 10], // point of the icon which will correspond to marker's location
+  popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
+});
+
+let layer21 = [];
+let layer20 = [];
 
 d3.json(url1).then(function(data) {
-    let markers = L.marker();
-      let myMap = L.map("map", {
-    center: [-31.9523,115.8613],
-    zoom: 7,
-   });
-  
-    // Adding a tile layer (the background map image) to our map:
-      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-          attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-      }).addTo(myMap);
-  
-      
+    let markers21 = L.marker();
+          
       // Loop through the data.
       for (let i = 0; i < data.length; i++) {
   
       // Set the data location property to a variable.
           let location = data[i];
-          console.log(location)
           let values = location[0].split(",")
-          console.log(values[0])
-          console.log(values[1])
           let values0 = values[0].replace('[','')
           let values1 = values[1].replace(']','')
           let values00 = values0.replace(' ','')
@@ -29,14 +35,67 @@ d3.json(url1).then(function(data) {
           let lat = parseFloat(values11);
           let lng = parseFloat(values00);
 
-          console.log(lat,lng)
-          console.log(typeof lat)
-          console.log(typeof lng)
+          // console.log(lat,lng)
+
         // Check for the location property.
           // if (location) {
         // Add a new marker to the cluster group, and bind a popup.
-        L.marker(lat,lng).addTo(myMap);
-        // .bindPopup(`<p>Year: ${location[1]}</p> <p>Date:: ${location[2]}</p> <p>Season: ${location[3]}</p> <p>District: ${location[4]}</p> <p>Coordinates: ${location[0]}</p>`)
+        layer21.push(L.marker([lat,lng], {icon: fireIcon})
+        .bindPopup(`<p>Year: ${location[1]}</p> <p>Date:: ${location[2]}</p> <p>Season: ${location[3]}</p> <p>District: ${location[4]}</p> <p>Coordinates: ${lat},${lng}</p>`)
+        // .addTo(myMap);
+)}});
+
+
+        d3.json(url2).then(function(data2) {
+          let markers20 = L.marker();
+          for (let i = 0; i < data2.length; i++) {
+  
+            // Set the data location property to a variable.
+                let location2 = data2[i];
+                let values2 = location2[0].split(",")
+                let values20 = values2[0].replace('[','')
+                let values21 = values2[1].replace(']','')
+                let values200 = values20.replace(' ','')
+                let values211 = values21.replace(' ','')
+                let lat2 = parseFloat(values211);
+                let lng2 = parseFloat(values200);
+                // console.log(lat2,lng2)
+                layer21.push(
+                  L.marker([lat2,lng2], {
+                    icon: fireIcon2})
+                .bindPopup(`<p>Year: ${location[1]}</p> <p>Date:: ${location[2]}</p> <p>Season: ${location[3]}</p> <p>District: ${location[4]}</p> <p>Coordinates: ${lat2},${lng2}</p>`)
+        )}});
+        
+        // Adding a tile layer (the background map image) to our map:
+        let street = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+          attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        });
+      
+        let fires_2020 = L.layerGroup(layer20);
+        let fires_2021 = L.layerGroup(layer21);
         
 
-    }});
+        // Create a baseMaps object.
+        let baseMaps = {
+           'Street Map': street
+           };
+                
+        // Overlays that can be toggled on or off
+        let overlayMaps = {
+            '2020 fires': fires_2020,
+            '2021 fires': fires_2021
+            };
+                
+            let myMap = L.map("map", {
+              center: [-26.25,119.37],
+              zoom: 6,
+              layers: [street, fires_2020, fires_2021]
+             });
+
+
+    
+
+    L.control.layers(baseMaps, overlayMaps, {
+      collapsed: false
+    }
+    ).addTo(myMap);
