@@ -39,13 +39,13 @@ d3.json(url1).then(function (data) {
 
     // console.log(lat,lng)
 
-    // Check for the location property.
-    // if (location) {
-    // Add a new marker to the cluster group, and bind a popup.
-    layer21.push(L.marker([lat, lng], { icon: fireIcon })
-      .bindPopup(`<p>Year: ${location[1]}</p> <p>Date:: ${location[2]}</p> <p>Season: ${location[3]}</p> <p>District: ${location[4]}</p> <p>Coordinates: ${lat},${lng}</p>`))
+    // // add marker to a layer, and bind a popup.
+    layer21.push(L.marker([lat, lng]
+      , {icon: fireIcon}
+      )
+      .bindPopup(`<p>Year: ${location[1]}</p> <p>Date:: ${location[2]}</p> <p>Season: ${location[3]}</p> <p>District: ${location[4]}</p> <p>Coordinates: ${lat},${lng}</p>`)
     //.addTo(myMap);
-  }
+)}
 });
 
 
@@ -63,14 +63,17 @@ d3.json(url2).then(function (data2) {
     let lat2 = parseFloat(values211);
     let lng2 = parseFloat(values200);
     // console.log(lat2,lng2)
-    layer21.push(
-      L.marker([lat2, lng2], {
-        icon: fireIcon2
-      })
+    // add marker to a layer, and bind a popup.
+    layer20.push(
+      L.marker([lat2, lng2]
+        , {icon: fireIcon2}
+      )
         .bindPopup(`<p>Year: ${location[1]}</p> <p>Date:: ${location[2]}</p> <p>Season: ${location[3]}</p> <p>District: ${location[4]}</p> <p>Coordinates: ${lat2},${lng2}</p>`)
     )//.addTo(myMap);
   }
 });
+console.log(layer20)
+console.log(layer21)
 
 // Adding a tile layer (the background map image) to our map:
 let street = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -80,6 +83,8 @@ let street = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
 let fires_2020 = L.layerGroup(layer20);
 let fires_2021 = L.layerGroup(layer21);
 
+console.log(fires_2020)
+console.log(fires_2021)
 
 // Create a baseMaps object.
 let baseMaps = {
@@ -92,6 +97,9 @@ let overlayMaps = {
   '2021 fires': fires_2021
 };
 
+console.log(overlayMaps)
+
+// create map
 let myMap = L.map("map", {
   center: [-26.25, 119.37],
   zoom: 6,
@@ -100,7 +108,7 @@ let myMap = L.map("map", {
 
 
 
-
+// add layer controls
 L.control.layers(baseMaps, overlayMaps, {
   collapsed: false
 }
