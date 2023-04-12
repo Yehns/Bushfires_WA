@@ -75,10 +75,27 @@ d3.json(url2).then(function (data2) {
 console.log(layer20)
 console.log(layer21)
 
+  // Add the layer control to the map.
+  L.control.layers(baseMaps, overlayMaps, {
+    collapsed: false
+  }).addTo(myMap)
+}}; 
+
+
 // Adding a tile layer (the background map image) to our map:
 let street = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
   attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+})
+
+let topo = L.tileLayer('https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png', {
+  attribution: 'Map data: &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, <a href="http://viewfinderpanoramas.org">SRTM</a> | Map style: &copy; <a href="https://opentopomap.org">OpenTopoMap</a> (<a href="https://creativecommons.org/licenses/by-sa/3.0/">CC-BY-SA</a>)'
 });
+
+// Create a baseMaps object.
+let baseMaps = {
+  "Street Map": street,
+  "Topographic Map": topo
+};
 
 let fires_2020 = L.layerGroup(layer20);
 let fires_2021 = L.layerGroup(layer21);
@@ -88,7 +105,8 @@ console.log(fires_2021)
 
 // Create a baseMaps object.
 let baseMaps = {
-  'Street Map': street
+  'Street Map': street,
+  "Topographic Map": topo
 };
 
 // Overlays that can be toggled on or off
@@ -107,9 +125,3 @@ let myMap = L.map("map", {
 });
 
 
-
-// add layer controls
-L.control.layers(baseMaps, overlayMaps, {
-  collapsed: false
-}
-).addTo(myMap);
